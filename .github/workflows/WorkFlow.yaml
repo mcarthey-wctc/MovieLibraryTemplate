@@ -44,13 +44,15 @@ jobs:
     steps:
       - name: Set up GitHub CLI
         env:
-          GH_TOKEN: ${{ github.token }}  # Set GH_TOKEN environment variable
-        run: echo "GH_TOKEN=$GH_TOKEN" >> $GITHUB_ENV  # Export GH_TOKEN as an environment variable
-        
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Use secrets for the token
+        run: |
+          echo "machine github.com login $GH_TOKEN" > ~/.netrc
+          gh auth login --with-token <<<"$GH_TOKEN"  # Authenticate with GitHub CLI
+          
       - name: Apply topics to repository
         run: |
           # Use GitHub CLI to add topics to the repository
-          gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}' --token $GH_TOKEN
+          gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}'
 
   build:
 
