@@ -42,6 +42,10 @@ jobs:
   setup-assignment:
     runs-on: windows-latest
     steps:
+      - name: Unset GH_TOKEN
+        run: |
+          unset GH_TOKEN
+          
       - name: Set up GitHub CLI
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Use secrets for the token
