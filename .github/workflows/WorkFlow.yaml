@@ -46,12 +46,19 @@ jobs:
         run: |
           echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
     
-      - name: Apply topics to repository
+      - name: Apply topics to repository if it does not exist
         run: |
-          # Use GitHub CLI to add topics to the repository
-          echo '{"names": ["netdb-s24-a4-movielibrary"]}' > topics.json
-          gh api --method PUT /repos/${{ github.repository }}/topics --input topics.json
-          del topics.json  # Remove the temporary JSON file
+          topics=$(gh api /repos/${{ github.repository }}/topics | jq -r '.names[]')
+          if [[ ! $topics =~ "netdb-s24-a4-movielibrary" ]]; then
+            # Use GitHub CLI to add topics to the repository
+            echo "Topic not found, applying..."
+            echo '{"names": ["netdb-s24-a4-movielibrary"]}' > topics.json
+            gh api --method PUT /repos/${{ github.repository }}/topics --input topics.json
+            del topics.json  # Remove the temporary JSON file
+          else
+            echo "Topic already exists, skipping..."
+          fi
+    
           
   build:
 
