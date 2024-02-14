@@ -44,9 +44,10 @@ jobs:
     steps:
       - name: Set up GitHub CLI
         run: |
-          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" > github_env.txt
-          type github_env.txt | gh auth login --with-token
-          del github_env.txt  # Remove the temporary environment file
+          echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+#          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" > github_env.txt
+#          type github_env.txt | gh auth login --with-token
+#          del github_env.txt  # Remove the temporary environment file
     
       - name: Apply topics to repository
         run: |
