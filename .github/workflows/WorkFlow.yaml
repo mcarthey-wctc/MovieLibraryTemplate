@@ -17,6 +17,8 @@ on:
   pull_request:
     branches:
       - default
+  repository_dispatch:
+    types: [assigned] 
   schedule:
     - cron: '0 0 * * *' # Runs at 00:00 UTC every day
     # '*/15 * * * *' # example runs every 15 minutes
@@ -28,10 +30,9 @@ on:
     # | | └────── Day of the month (1 - 31)
     # | └──────── Hour (0 - 23)
     # └────────── Minute (0 - 59)
-  repository_dispatch:
-    types: [assigned] 
 
-  workflow_dispatch:  # Manual trigger event - uncomment below to prompt user on manual run
+# Manual trigger event - uncomment below to prompt user on manual run
+# workflow_dispatch:  
 #    inputs:
 #      topics:
 #        description: 'Topics to apply'
