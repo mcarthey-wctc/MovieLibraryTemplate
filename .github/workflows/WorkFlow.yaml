@@ -48,6 +48,7 @@ jobs:
         run: |
           echo "GH_TOKEN=$GH_TOKEN" > github_env.txt
           gh auth login --with-token < github_env.txt
+          unset GH_TOKEN  # Clear the GH_TOKEN environment variable
    
       - name: Apply topics to repository
         run: |
