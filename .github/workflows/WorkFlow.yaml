@@ -50,7 +50,7 @@ jobs:
         run: |
           # Use GitHub CLI to add topics to the repository
           echo '{"names": ["netdb-s24-a4-movielibrary"]}' > topics.json
-          gh api --method PUT /repos/${{ github.repository }}/topics --inpu topics.json
+          gh api --method PUT /repos/${{ github.repository }}/topics --input topics.json
           del topics.json  # Remove the temporary JSON file
           
   build:
