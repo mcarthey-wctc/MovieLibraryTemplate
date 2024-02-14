@@ -45,15 +45,13 @@ jobs:
       - name: Set up GitHub CLI
         run: |
           echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
-#          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" > github_env.txt
-#          type github_env.txt | gh auth login --with-token
-#          del github_env.txt  # Remove the temporary environment file
     
       - name: Apply topics to repository
         run: |
           # Use GitHub CLI to add topics to the repository
-          #gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}'
-          gh api --method PUT /repos/mcarthey-wctc/MovieLibraryTemplate/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}'
+          echo '{"names": ["netdb-s24-a4-movielibrary"]}' > topics.json
+          gh api --method PUT /repos/${{ github.repository }}/topics --inpu topics.json
+          del topics.json  # Remove the temporary JSON file
           
   build:
 
