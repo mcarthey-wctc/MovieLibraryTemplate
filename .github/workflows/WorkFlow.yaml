@@ -42,9 +42,9 @@ jobs:
   setup-assignment:
     runs-on: windows-latest
     steps:
-      - name: Unset GH_TOKEN
+      - name: Clear GH_TOKEN
         run: |
-          unset GH_TOKEN
+          set GH_TOKEN=
           
       - name: Set up GitHub CLI
         env:
