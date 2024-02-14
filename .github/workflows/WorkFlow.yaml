@@ -28,8 +28,24 @@ on:
     # | | └────── Day of the month (1 - 31)
     # | └──────── Hour (0 - 23)
     # └────────── Minute (0 - 59)
-    
+  repository_dispatch:
+    types: [assigned] 
+
+  workflow_dispatch:  # Manual trigger event
+    inputs:
+      topics:
+        description: 'Topics to apply'
+        required: true
+        
 jobs:
+
+  setup-assignment:
+    runs-on: windows-latest
+    steps:
+      - name: Apply topics to repository
+        run: |
+          # Use GitHub CLI to add topics to the repository
+          gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}'
 
   build:
 
