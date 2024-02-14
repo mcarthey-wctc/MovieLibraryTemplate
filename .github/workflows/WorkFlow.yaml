@@ -42,10 +42,15 @@ jobs:
   setup-assignment:
     runs-on: windows-latest
     steps:
+      - name: Set up GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}  # Set GH_TOKEN environment variable
+        run: echo "GH_TOKEN=$GH_TOKEN" >> $GITHUB_ENV  # Export GH_TOKEN as an environment variable
+        
       - name: Apply topics to repository
         run: |
           # Use GitHub CLI to add topics to the repository
-          gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}'
+          gh api --method PUT /repos/${{ github.repository }}/topics --input '{"names": ["netdb-s24-a4-movielibrary"]}' --token $GH_TOKEN
 
   build:
 
