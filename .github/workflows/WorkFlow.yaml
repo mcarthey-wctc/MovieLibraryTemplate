@@ -31,11 +31,11 @@ on:
   repository_dispatch:
     types: [assigned] 
 
-  workflow_dispatch:  # Manual trigger event
-    inputs:
-      topics:
-        description: 'Topics to apply'
-        required: true
+  workflow_dispatch:  # Manual trigger event - uncomment below to prompt user on manual run
+#    inputs:
+#      topics:
+#        description: 'Topics to apply'
+#        required: true
         
 jobs:
 
