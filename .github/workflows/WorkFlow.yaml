@@ -47,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Use secrets for the token
         run: |
           echo "GH_TOKEN=$GH_TOKEN" > github_env.txt
-          gh auth login --with-token < github_env.txt
+          type github_env.txt | gh auth login --with-token
           unset GH_TOKEN  # Clear the GH_TOKEN environment variable
    
       - name: Apply topics to repository
