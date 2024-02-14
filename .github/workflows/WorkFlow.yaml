@@ -48,8 +48,9 @@ jobs:
         run: |
           echo "GH_TOKEN=$GH_TOKEN" > github_env.txt
           type github_env.txt | gh auth login --with-token
-          unset GH_TOKEN  # Clear the GH_TOKEN environment variable
-   
+          set GH_TOKEN=  # Clear the GH_TOKEN environment variable
+          del github_env.txt  # Remove the temporary environment file
+            
       - name: Apply topics to repository
         run: |
           # Use GitHub CLI to add topics to the repository
