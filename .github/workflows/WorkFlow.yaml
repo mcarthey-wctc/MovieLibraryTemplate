@@ -46,8 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Use secrets for the token
         run: |
-          echo "machine github.com login $GH_TOKEN" > ~/.netrc
-          gh auth login --with-token <<<"$GH_TOKEN"  # Authenticate with GitHub CLI
+          gh auth login --with-token $GH_TOKEN  # Authenticate with GitHub CLI
           
       - name: Apply topics to repository
         run: |
