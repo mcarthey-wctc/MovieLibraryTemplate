@@ -45,20 +45,27 @@ jobs:
       - name: Set up GitHub CLI
         run: |
           echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
-    
-      - name: Apply topics to repository if it does not exist
+
+  check-topic:
+    runs-on: windows-latest
+    needs: setup-assignment
+    steps:
+      - name: Check if topic exists
+        id: check_topic
         run: |
-          topics=$(gh api /repos/${{ github.repository }}/topics | jq -r '.names[]')
-          if [[ ! $topics =~ "netdb-s24-a4-movielibrary" ]]; then
-            # Use GitHub CLI to add topics to the repository
-            echo "Topic not found, applying..."
+          gh api /repos/${{ github.repository }}/topics | grep -q 'netdb-s24-a4-movielibrary'
+          echo "::set-output name=topic_exists::${PIPESTATUS[1]}"
+
+  apply-topic:
+    runs-on: windows-latest
+    needs: check-topic
+    steps:
+      - name: Apply topic if it doesn't exist
+        if: steps.check-topic.outputs.topic_exists == '1'
+        run: |
             echo '{"names": ["netdb-s24-a4-movielibrary"]}' > topics.json
             gh api --method PUT /repos/${{ github.repository }}/topics --input topics.json
             del topics.json  # Remove the temporary JSON file
-          else
-            echo "Topic already exists, skipping..."
-          fi
-    
           
   build:
 
