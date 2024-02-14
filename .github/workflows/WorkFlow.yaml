@@ -48,6 +48,8 @@ jobs:
 
   check-topic:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}      
     needs: setup-assignment
     steps:
       - name: Check if topic exists
@@ -58,6 +60,8 @@ jobs:
 
   apply-topic:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}      
     needs: check-topic
     steps:
       - name: Apply topic if it doesn't exist
